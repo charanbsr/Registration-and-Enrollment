@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            text-align: center;
+            align-items: center;
+            background-color: yellowgreen;
+        }
+        form{
+            width: 350px;
+            height: 400px;
+            border: 3px solid orange;
+            background-color: aquamarine;
+            text-align: center;
+            align-items: center;
+            font-family: monospace;
+            font-size: 20px;
+            display: inline-block;
+            justify-content: space-around;
+            padding: 20px;
+        }
+        input{
+            border: 2px solid rgb(4, 4, 4);
+            border-radius: 5px;
+            height: 23px;
+            padding-left: 10px;
+        }
+        button{
+            background-color:  rgb(70, 235, 70);
+            font-size: 16px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <form methods="POST" formaction="/authLogin">
+            <div>
+                <h2>Login</h2>
+            </div>
+            <div style="display: flex; justify-content: space-around;margin-bottom: 15px;">
+                <label>Enter UserName</label>
+                <input type="text/email" name="username" id='username' required>
+            </div>
+            <div style="display: flex; justify-content: space-around;margin-bottom: 15px;">
+                <label>Enter Password</label>
+                <input type="password" name="password" id='password' required>
+            </div>
+            <div>
+                <!-- <button action="window.location.href='/authLogin'">Login</button> -->
+                <button type="submit">Login</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        $(document).ready(function() {
+            // When the form is submitted
+            $('#dataForm').on('submit', function(e) {
+                e.preventDefault();
+            $.ajax({
+                url: '/authLogin',  // Flask route
+                method: 'POST',
+                data: {
+                    //name: name,
+                    //email: email,
+                    username: username,
+                    password: password
+                },
+                success: function(response) {
+                    $('#response').html(response);  // Display the response from Flask
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error:", error);
+                    $('#response').html("An error occurred");
+                }
+            });
+        });
+    });
+    </script>
+</body>
+</html>
